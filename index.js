@@ -18,8 +18,8 @@ let lastMessages = []; // Menyimpan pesan terakhir untuk ditampilkan di web
 
 // Daftar nomor yang diperbolehkan mengakses bot (Admin dan Pengguna Terverifikasi)
 const allowedNumbers = [
-    '6283148450932',  // Admin
-    '6283149073293'   // Nomor yang Diperbolehkan
+    '+6283148450932',  // Admin
+    '+6283149073293'   // Nomor yang Diperbolehkan
 ];
 
 const client = new Client({
