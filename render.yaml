@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: whatsapp-bot
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    region: "oregon"  # Pilih region yang sesuai dengan kebutuhan kamu
+    healthCheckPath: "/"
+    instanceType: "free"  # Sesuaikan dengan kebutuhan instance kamu
+    autoDeploy: true
+    branch: main  # Sesuaikan dengan branch yang digunakan
