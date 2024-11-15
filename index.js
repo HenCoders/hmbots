@@ -16,12 +16,6 @@ let botStatus = "QR Code untuk login"; // Status ketika menunggu login
 let qrCodeUrl = ''; // Menyimpan URL QR code yang aktif
 let lastMessages = []; // Menyimpan pesan terakhir untuk ditampilkan di web
 
-// Daftar nomor yang diperbolehkan mengakses bot (Admin dan Pengguna Terverifikasi)
-const allowedNumbers = [
-    '+6283148450932',  // Admin
-    '+6283149073293'   // Nomor yang Diperbolehkan
-];
-
 const client = new Client({
     authStrategy: new LocalAuth({
         clientId: "client", // ID unik untuk sesi
@@ -60,27 +54,18 @@ client.on('message', async (message) => {
         lastMessages.shift();  // Menghapus pesan paling lama jika lebih dari 5 pesan
     }
 
-    // Jika pengirim nomor tidak terdaftar, balas dengan pesan penolakan
-    if (!allowedNumbers.includes(senderNumber)) {
-        client.sendMessage(message.from, 'Maaf, Anda tidak terdaftar untuk menggunakan bot ini.');
-        return;
-    }
+    // Balas pesan dari pengirim mana pun
+    const imagePath = path.join(__dirname, 'kamu.jpg'); // Gambar di folder yang sama dengan index.js
 
-    // Jika pengirim nomor terdaftar, kirim pesan dengan gambar dan link
-    if (allowedNumbers.includes(senderNumber)) {
-        // Path gambar (letakkan gambar di folder yang sama dengan index.js)
-        const imagePath = path.join(__dirname, 'kamu.jpg'); // Gambar di folder yang sama dengan index.js
+    // Mengirim gambar pertama
+    client.sendMessage(message.from, 'Hallo Juga Reisya, Nih Pembuat Saya Menitipkan Sesuatu Ke Saya, Silakan Klik Link Di Bawah Ini.');
 
-        // Mengirim gambar pertama
-        client.sendMessage(message.from, 'Hallo Juga, Reisya, Nih Pembuat Saya Menitipkan Sesuatu Ke Saya, Silakan Klik Link Di Bawah Ini.');
+    // Kirim gambar media
+    const media = await client.sendMessage(message.from, fs.readFileSync(imagePath), { caption: 'Pesan Special Untuk Reisya' });
 
-        // Kirim gambar media
-        const media = await client.sendMessage(message.from, fs.readFileSync(imagePath), { caption: 'Pesan Special Untuk Reisya' });
-
-        // Mengirim pesan dengan link langsung
-        const linkMessage = `Silakan klik link berikut untuk mengunjungi website saya: https://reisya.ct.ws`;
-        client.sendMessage(message.from, linkMessage);
-    }
+    // Mengirim pesan dengan link langsung
+    const linkMessage = `Silakan klik link berikut untuk mengunjungi website saya: https://reisya.ct.ws`;
+    client.sendMessage(message.from, linkMessage);
 });
 
 // Event: Bot logout atau session expired
