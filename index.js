@@ -54,15 +54,15 @@ client.on('message', async (message) => {
         lastMessages.shift();  // Menghapus pesan paling lama jika lebih dari 5 pesan
     }
 
-    // Balas pesan dari pengirim mana pun
-    const imagePath = path.join(__dirname, 'kamu.jpg'); // Gambar di folder yang sama dengan index.js
-
+        // Mengirim gambar dari URL
+    const imageUrl = 'https://raw.githubusercontent.com/HenCoders/hmbots/refs/heads/main/kamu.jpg'; // Ganti dengan link gambar kamu
+    const media = await MessageMedia.fromUrl(imageUrl);
+    client.sendMessage(message.from, media, { caption: 'Pesan Special Untuk Reisya' });
     // Mengirim gambar pertama
+    
     client.sendMessage(message.from, 'Hallo Juga Reisya, Nih Pembuat Saya Menitipkan Sesuatu Ke Saya, Silakan Klik Link Di Bawah Ini.');
 
-    // Kirim gambar media
-    const media = await client.sendMessage(message.from, fs.readFileSync(imagePath), { caption: 'Pesan Special Untuk Reisya' });
-
+    
     // Mengirim pesan dengan link langsung
     const linkMessage = `Silakan klik link berikut untuk mengunjungi website saya: https://reisya.ct.ws`;
     client.sendMessage(message.from, linkMessage);
